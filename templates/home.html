@@ -1,9 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="jumbotron">
-    <h1 class="text-center">BobChat</h1>
-    <h3 class="text-center">The forum site for the Quinnipiac Bobcats</h3>
-  </div>
-
+{% if user.is_authenticated %}
+<div class="jumbotron">
+  <h1 class="text-center">Welcome back to BobChat</h1>
+</div>
+{% else %}
+<div class="jumbotron">
+  <h1 class="text-center">Welcome to BobChat</h1>
+  <h3 class="text-center">The forum site for the Quinnipiac Bobcats</h3>
+  <p><a class="btn btn-lg btn-default center-block" href="{% url 'registration_register' %}">Sign up</a></p>
+</div>
+{% endif %}
 {% endblock %}
 

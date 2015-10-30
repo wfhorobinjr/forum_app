@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ thread.title }}</h1>
+<p>{{ thread.link }}</p>
+<p>{{ thread.text }}</p>
+<p>Asked by {{ thread.user.username }} on {{ thread.created_at }}</p>
+{% endblock %}

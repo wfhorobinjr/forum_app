@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView, ListView
+from django.views.generic import TemplateView, CreateView, ListView, DetailView
 from django.core.urlresolvers import reverse_lazy
 from .models import*
 
@@ -21,3 +21,7 @@ class ThreadCreateView(CreateView):
 class ThreadListView(ListView):
   model = Thread
   template_name = "thread/thread_list.html"
+
+class ThreadDetailView(DetailView):
+  model = Thread
+  template_name = 'thread/thread_detail.html'

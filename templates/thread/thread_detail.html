@@ -4,4 +4,7 @@
 <p>{{ thread.link }}</p>
 <p>{{ thread.text }}</p>
 <p>Asked by {{ thread.user.username }} on {{ thread.created_at }}</p>
+{% if thread.user == user %}
+<p><a href="{% url 'thread_update' pk=thread.id %}">Edit thread</a><p>
+{% endif %}
 {% endblock %}

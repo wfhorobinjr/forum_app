@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
+from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from .models import*
 
@@ -30,3 +30,8 @@ class ThreadUpdateView(UpdateView):
   model = Thread
   template_name = 'thread/thread_form.html'
   fields = ['title', 'link', 'text']
+
+class ThreadDeleteView(DeleteView):
+  model = Thread
+  template_name = 'thread/thread_confirm_delete.html'
+  success_url = reverse_lazy('thread_list')

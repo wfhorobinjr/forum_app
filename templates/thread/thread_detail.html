@@ -5,7 +5,8 @@
 <p>{{ thread.text }}</p>
 <p>Asked by {{ thread.user.username }} on {{ thread.created_at }}</p>
 {% if thread.user == user %}
-<p><a href="{% url 'thread_update' pk=thread.id %}">Edit thread</a><p>
-<p><a href="{% url 'thread_delete' pk=thread.id %}">Delete thread</a><p>
+<p><a href="{% url 'thread_update' pk=thread.id %}">Edit thread</a></p>
+<p><a href="{% url 'thread_delete' pk=thread.id %}">Delete thread</a></p>
 {% endif %}
+<p><a href="{% url 'comment_create' pk=thread.id %}">Add comment</a></p>
 {% endblock %}

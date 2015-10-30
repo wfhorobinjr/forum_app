@@ -10,4 +10,5 @@ urlpatterns = patterns('',
   url(r'^thread/(?P<pk>\d+)/$', ThreadDetailView.as_view(), name='thread_detail'),
   url(r'^thread/update/(?P<pk>\d+)/$', ThreadUpdateView.as_view(), name='thread_update'),
   url(r'^thread/delete/(?P<pk>\d+)/$', ThreadDeleteView.as_view(), name='thread_delete'),
+  url(r'^thread/(?P<pk>\d+)/comment/create/$', CommentCreateView.as_view(), name='comment_create'),
 )

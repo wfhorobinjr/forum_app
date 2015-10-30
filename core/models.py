@@ -16,3 +16,12 @@ class Thread(models.Model):
 
   def __unicode__(self):
     return self.title
+
+class Comment(models.Model):
+  thread = models.ForeignKey(Thread)
+  user = models.ForeignKey(User)
+  created_at = models.DateTimeField(auto_now_add=True)
+  response = models.TextField()
+
+  def __unicode__(self):
+    return self.response

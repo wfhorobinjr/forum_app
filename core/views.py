@@ -25,6 +25,12 @@ class ThreadListView(ListView):
   template_name = "thread/thread_list.html"
   paginate_by = 5
 
+  def get_context_data(self, **kwargs):
+    context = super(ThreadListView, self).get_context_data(**kwargs)
+    user_votes = Thread.objects.filter(vote__user=self.request.user)
+    context['user_votes'] = user_votes
+    return context
+
 class ThreadDetailView(DetailView):
   model = Thread
   template_name = 'thread/thread_detail.html'
@@ -34,6 +40,8 @@ class ThreadDetailView(DetailView):
     thread = Thread.objects.get(id=self.kwargs['pk'])
     comments = Comment.objects.filter(thread=thread)
     context['comments'] = comments
+    user_votes = Comment.objects.filter(vote__user=self.request.user)
+    context['user_votes'] = user_votes
     return context
 
 class ThreadUpdateView(UpdateView):

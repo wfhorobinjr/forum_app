@@ -4,13 +4,22 @@
 <div class="panel">
   <h3><a href="{{ thread.get_absolute_url }}">{{ thread.title }}</a></h3>
   <p>Created by <a href="{% url 'user_detail' slug=thread.user.username %}">{{ thread.user.username }}</a> on {{ thread.created_at }}</p>
-  <p>{{ thread.vote_set.all.count }} Vote{{ thread.vote_set.all.count|pluralize }}</p>
   <form method="post" action="{% url 'vote' %}">
+    <span class="badge">{{ thread.comment_set.all.count }} Comment{{  thread.comment_set.all.count|pluralize }}</span>
+    <span class="badge">{{ thread.vote_set.all.count }} Vote{{ thread.vote_set.all.count|pluralize }}</span>
     {% csrf_token %}
-    <input type="hidden" name="thread" value="{{ thread.id }}"/>
-    <input type="hidden" name="user" value="{{ user.id }}"/>
-    <button>+</button>
-  </form>
+    <input type="hidden" name="thread" value="{{ thread.id }}" />
+    <input type="hidden" name="user" value="{{ user.id }}" />
+        {% if thread in user_votes %}
+        <button class="btn btn-link">
+          <span class="glyphicon glyphicon-menu-down"></span>
+        </button>
+        {% else %}
+        <button class="btn btn-link">
+          <span class="glyphicon glyphicon-menu-up"></span>
+        </button>
+        {% endif %}
+    </form>
 </div>
 {% empty %}
 <p>No results found</p>

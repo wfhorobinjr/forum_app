@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ user_in_view.username }}</h1>
+<p>Email address: {{ user_in_view.email }}</p>
+<p>First name: {{ user_in_view.first_name }}</p>
+<p>Last name: {{ user_in_view.last_name }}</p>
+<h3>Threads ({{ threads.count }})</h3>
+{% for thread in threads %}
+  <p><a href="{{ thread.get_absolute_url }}">{{ thread.title }}</a></p>
+{% endfor %}
+<h3>Comments ({{ comments.count }})</h3>
+{% for comment in comments %}
+  <p><a href="{{ comment.thread.get_absolute_url }}">{{ thread.title }}</a></p>
+  <p>> {{comment.response }}<p>
+{% endfor %}
+{% endblock %}

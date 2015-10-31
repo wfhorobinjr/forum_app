@@ -124,3 +124,18 @@ class VoteFormView(FormView):
       else:
         prev_votes[0].delete()
     return redirect('thread_list')
+
+class UserDetailView(DetailView):
+  model = User
+  slug_field = 'username'
+  template_name = 'user/user_detail.html'
+  context_object_name = 'user_in_view'
+
+  def get_context_data(self, **kwargs):
+    context = super(UserDetailView, self).get_context_data(**kwargs)
+    user_in_view = User.objects.get(username=self.kwargs['slug'])
+    threads = Thread.objects.filter(user=user_in_view)
+    context['threads'] = threads
+    comments = Comment.objects.filter(user=user_in_view)
+    context['comments'] = comments
+    return context

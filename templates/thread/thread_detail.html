@@ -3,7 +3,7 @@
 <h1>{{ thread.title }}</h1>
 <p>{{ thread.link }}</p>
 <p>{{ thread.text }}</p>
-<p>Asked by {{ thread.user.username }} on {{ thread.created_at }}</p>
+<p>Created by <a href="{% url 'user_detail' slug=thread.user.username %}">{{ thread.user.username }}</a> on {{ thread.created_at }}</p>
 {% if thread.user == user %}
 <p><a href="{% url 'thread_update' pk=thread.id %}">Edit thread</a></p>
 <p><a href="{% url 'thread_delete' pk=thread.id %}">Delete thread</a></p>
@@ -18,8 +18,7 @@
   <p><a href="{% url 'comment_update' thread_pk=thread.id comment_pk=comment.id %}">Edit comment</a></p>
   <p><a href="{% url 'comment_delete' thread_pk=thread.id comment_pk=comment.id %}">Delete comment</a></p>
   {% endif %}
-  <p>Commented by {{ comment.user.username }} on {{ comment.created_at }}</p>
-  <p>{{ comment.vote_set.all.count }} Vote{{ comment.vote_set.all.count|pluralize }}</p>
+  <p>Commented by <a href="{% url 'user_detail' slug=comment.user.username %}">{{ comment.user.username }}</a> on {{ comment.created_at }} ({{ comment.vote_set.all.count }} Vote{{ comment.vote_set.all.count|pluralize }})</p>
   <form method="post" action="{% url 'vote' %}">
     {% csrf_token %}
     <input type="hidden" name="comment" value="{{ comment.id }}" />

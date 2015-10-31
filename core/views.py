@@ -55,3 +55,12 @@ class CommentCreateView(CreateView):
     form.instance.user = self.request.user
     form.instance.thread = Thread.objects.get(id=self.kwargs['pk'])
     return super(CommentCreateView, self).form_valid(form)
+
+class CommentUpdateView(UpdateView):
+  model = Comment
+  pk_url_kwarg = 'comment_pk'
+  template_name = 'comment/comment_form.html'
+  fields = ['response']
+
+  def get_success_url(self):
+    return self.object.thread.get_absolute_url()

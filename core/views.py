@@ -23,6 +23,7 @@ class ThreadCreateView(CreateView):
 class ThreadListView(ListView):
   model = Thread
   template_name = "thread/thread_list.html"
+  paginate_by = 5
 
 class ThreadDetailView(DetailView):
   model = Thread

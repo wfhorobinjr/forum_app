@@ -4,6 +4,13 @@
 <div class="panel">
   <h3><a href="{{ thread.get_absolute_url }}">{{ thread.title }}</a></h3>
   <p>Created by {{ thread.user.username }} on {{ thread.created_at }}</p>
+  <p>{{ thread.vote_set.all.count }} Vote{{ thread.vote_set.all.count|pluralize }}</p>
+  <form method="post" action="{% url 'vote' %}">
+    {% csrf_token %}
+    <input type="hidden" name="thread" value="{{ thread.id }}"/>
+    <input type="hidden" name="user" value="{{ user.id }}"/>
+    <button>+</button>
+  </form>
 </div>
 {% endfor %}
 {% endblock %}

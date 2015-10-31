@@ -1,7 +1,9 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
+from django.shortcuts import render, redirect
+from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView, FormView
 from django.core.urlresolvers import reverse_lazy
 from .models import*
+from django.core.exceptions import PermissionDenied
+from .forms import *
 
 # Create your views here.
 
@@ -38,10 +40,24 @@ class ThreadUpdateView(UpdateView):
   template_name = 'thread/thread_form.html'
   fields = ['title', 'link', 'text']
 
+  def get_object(self, *args, **kwargs):
+    object = super(ThreadUpdateView, self).get_object(*args, **kwargs)
+    if object.user != self.request.user:
+      raise PermissionDenied()
+    return object
+
+
 class ThreadDeleteView(DeleteView):
   model = Thread
   template_name = 'thread/thread_confirm_delete.html'
   success_url = reverse_lazy('thread_list')
+
+  def get_object(self, *args, **kwargs):
+    object = super(ThreadUpdateView, self).get_object(*args, **kwargs)
+    if object.user != self.request.user:
+      raise PermissionDenied()
+    return object
+
 
 class CommentCreateView(CreateView):
   model = Comment
@@ -62,6 +78,12 @@ class CommentUpdateView(UpdateView):
   template_name = 'comment/comment_form.html'
   fields = ['response']
 
+  def get_object(self, *args, **kwargs):
+    object = super(CommentUpdateView, self).get_object(*args, **kwargs)
+    if object.user != self.request.user:
+      raise PermissionDenied()
+    return object
+
   def get_success_url(self):
     return self.object.thread.get_absolute_url()
 
@@ -72,3 +94,23 @@ class CommentDeleteView(DeleteView):
 
   def get_success_url(self):
     return self.object.thread.get_absolute_url()
+
+  def get_object(self, *args, **kwargs):
+    object = super(CommentDeleteView, self).get_object(*args, **kwargs)
+    if object.user != self.request.user:
+      raise PermissionDenied()
+    return object
+
+class VoteFormView(FormView):
+  form_class = VoteForm
+
+  def form_valid(self, form):
+    user = self.request.user
+    thread = Thread.objects.get(pk=form.data['thread'])
+    prev_votes = Vote.objects.filter(user=user, thread=thread)
+    has_voted = (prev_votes.count()>0)
+    if not has_voted:
+      Vote.objects.create(user=user, thread=thread)
+    else:
+      prev_votes[0].delete()
+    return redirect('thread_list')

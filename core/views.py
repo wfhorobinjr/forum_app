@@ -26,6 +26,13 @@ class ThreadDetailView(DetailView):
   model = Thread
   template_name = 'thread/thread_detail.html'
 
+  def get_context_data(self, **kwargs):
+    context = super(ThreadDetailView, self).get_context_data(**kwargs)
+    thread = Thread.objects.get(id=self.kwargs['pk'])
+    comments = Comment.objects.filter(thread=thread)
+    context['comments'] = comments
+    return context
+
 class ThreadUpdateView(UpdateView):
   model = Thread
   template_name = 'thread/thread_form.html'

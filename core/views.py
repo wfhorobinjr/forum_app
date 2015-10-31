@@ -107,10 +107,20 @@ class VoteFormView(FormView):
   def form_valid(self, form):
     user = self.request.user
     thread = Thread.objects.get(pk=form.data['thread'])
-    prev_votes = Vote.objects.filter(user=user, thread=thread)
-    has_voted = (prev_votes.count()>0)
-    if not has_voted:
-      Vote.objects.create(user=user, thread=thread)
-    else:
-      prev_votes[0].delete()
+    try:
+      comment = Comment.objects.get(pk=form.data["comment"])
+      prev_votes = Vote.objects.filter(user=user, comment=comment)
+      has_voted = (prev_votes.count()>0)
+      if not has_voted:
+        Vote.objects.create(user=user, comment=comment)
+      else:
+        prev_votes[0].delete()
+      return redirect(reverse('thread_detail', args=[form.data["thread"]]))
+    except:
+      prev_votes = Vote.objects.filter(user=user, thread=thread)
+      has_voted = (prev_votes.count()>0)
+      if not has_voted:
+        Vote.objects.create(user=user, thread=thread)
+      else:
+        prev_votes[0].delete()
     return redirect('thread_list')

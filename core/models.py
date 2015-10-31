@@ -28,7 +28,8 @@ class Comment(models.Model):
 
 class Vote(models.Model):
   user = models.ForeignKey(User)
-  thread = models.ForeignKey(Thread)
+  thread = models.ForeignKey(Thread, blank=True, null=True)
+  comment = models.ForeignKey(Comment, blank=True, null=True)
 
   def __unicode__(self):
     return "%s upvoted" % (self.user.username)

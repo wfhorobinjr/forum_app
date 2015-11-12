@@ -25,16 +25,16 @@
     <input type="hidden" name="comment" value="{{ comment.id }}" />
     <input type="hidden" name="thread" value="{{ thread.id }}" />
     <input type="hidden" name="user" value="{{ user.id }}" />
-    {% if answer in user_votes %}
-        <button class="btn btn-link">
-          <span class="glyphicon glyphicon-menu-down"></span>
-        </button>
-    {% else %}
-        <button class="btn btn-link">
-          <span class="glyphicon glyphicon-menu-up"></span>
-        </button>
-    {% endif %}
-</form>
+      {% if comment in user_votes %}
+      <button class="btn btn-link">
+        <span class="glyphicon glyphicon-chevron-down"></span>
+      </button>
+      {% else %}
+      <button class="btn btn-link">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+      </button>
+      {% endif %}
+  </form>
 </div>
 {% endfor %}
 <p><a href="{% url 'comment_create' pk=thread.id %}">Add comment</a></p>

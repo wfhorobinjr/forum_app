@@ -13,7 +13,7 @@ class Home(TemplateView):
 class ThreadCreateView(CreateView):
   model = Thread
   template_name = "thread/thread_form.html"
-  fields = ['title', 'link', 'text']
+  fields = ['title', 'subject', 'link', 'text']
   success_url = reverse_lazy('thread_list')
 
   def form_valid(self, form):

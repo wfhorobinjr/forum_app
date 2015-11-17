@@ -1,14 +1,21 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block content %}
 {% if user.is_authenticated %}
-<div class="jumbotron">
-  <h1 class="text-center">Welcome back to BobChat</h1>
+<div class="container">
+  <div class="jumbotron">
+    <h1 class="text-center">Welcome back to BobChat</h1>
+  </div>
+  <img class="center-block" src="{% static 'jpg/BobChat.JPG' %}" alt="BobChat" class="center"/>
 </div>
 {% else %}
-<div class="jumbotron">
-  <h1 class="text-center">Welcome to BobChat</h1>
-  <h3 class="text-center">The forum destination for the Quinnipiac Bobcats</h3>
-  <p><a class="btn btn-lg btn-default center-block" href="{% url 'registration_register' %}">Sign up</a></p>
+<div class="container">
+  <div class="jumbotron">
+    <h1 class="text-center">Welcome to BobChat</h1>
+    <h3 class="text-center">The forum destination for the Quinnipiac Bobcats</h3>
+    <p><a class="btn btn-lg btn-default center-block" href="{% url 'registration_register' %}">Sign up</a></p>
+  </div>
+  <img class="center-block" src="{% static 'jpg/BobChat.JPG' %}" alt="BobChat"/>
 </div>
 {% endif %}
 {% endblock %}

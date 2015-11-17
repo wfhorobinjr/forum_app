@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>{{ thread.title }}</h1>
+<h3>{{ thread.subject }}</h3>
 <p>{{ thread.link }}</p>
 <p>{{ thread.text }}</p>
 <p>Created by <a href="{% url 'user_detail' slug=thread.user.username %}">{{ thread.user.username }}</a> on {{ thread.created_at }}</p>

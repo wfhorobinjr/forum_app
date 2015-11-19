@@ -4,7 +4,7 @@
 <div class="panel">
   <h3><a href="{{ thread.get_absolute_url }}">{{ thread.title }}</a></h3>
   <p>Created by <a href="{% url 'user_detail' slug=thread.user.username %}">{{ thread.user.username }}</a> on {{ thread.created_at }}</p>
-  <p> Subject is {{ thread.subject }}</p>
+  <p> Subject: {{ thread.get_subject_display }}</p>
   <form method="post" action="{% url 'vote' %}">
     <span class="badge">{{ thread.comment_set.all.count }} Comment{{  thread.comment_set.all.count|pluralize }}</span>
     <span class="badge">{{ thread.vote_set.all.count }} Vote{{ thread.vote_set.all.count|pluralize }}</span>
